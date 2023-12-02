@@ -37,13 +37,12 @@ CREATE TABLE GroupAccount(
     group_id BIGINT NOT NULL,
     account_id BIGINT NOT NULL,
 	join_date DATE,
+    PRIMARY KEY (group_id, account_id),
 	FOREIGN KEY (group_id) REFERENCES Groupss(group_id),
     FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
 );
 
--- ALTER TABLE GroupAccount
--- ADD COLUMN group_account_id BIGINT AUTO_INCREMENT,
--- ADD CONSTRAINT group_account_id  PRIMARY KEY (group_id,account_id);
+
 
 CREATE TABLE TypeQuestion(
 	type_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -90,6 +89,7 @@ CREATE TABLE Exam(
 CREATE TABLE ExamQuestion(
 	exam_id BIGINT NOT NULL,
     question_id BIGINT NOT NULL,
+    PRIMARY KEY (exam_id, question_id),
     FOREIGN KEY (exam_id) REFERENCES Exam(exam_id),
     FOREIGN KEY (question_id) REFERENCES Question(question_id)
 );
