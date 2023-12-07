@@ -79,14 +79,14 @@ WHERE LENGTH(full_name) = (SELECT MAX(LENGTH(full_name)) FROM Account);
 SELECT * FROM Account
 WHERE LENGTH(full_name) = (SELECT MAX(LENGTH(full_name)) FROM Account) AND department_id = 2;
 
--- Question 6: Lấy ra tên group đã tham gia trước ngày 20/12/2019
+-- Question 6: Lấy ra tên group đã tham gia trước ngày 20/12/2019 19 22 
 SELECT * FROM `Group`
 WHERE created_date < '2019-12-20';
 
 -- Question 7: Lấy ra ID của question có >= 4 câu trả lời
-SELECT question_id FROM Anwser
+SELECT question_id, COUNT(question_id) AS numOfAnwser FROM Anwser
 GROUP BY question_id
-HAVING (SELECT COUNT(*) FROM Anwser) >= 4;
+HAVING numOfAnwser >= 4;
 
 -- Question 8: Lấy ra các mã đề thi có thời gian thi >= 60 phút và được tạo trước ngày 20/12/2019
 SELECT * FROM EXAM
@@ -106,7 +106,7 @@ SELECT * FROM ACCOUNT
 WHERE full_name LIKE 'N%' AND full_name LIKE '%x';
 
 -- Question 12: Xóa tất cả các exam được tạo trước ngày 20/12/2019
--- SET SQL_SAFE_UPDATES = 1;
+-- SET SQL_SAFE_UPDATES = 0;
 
 DELETE Q.*, E.* FROM  Exam E
 INNER JOIN ExamQuestion Q ON Q.exam_id = E.id
