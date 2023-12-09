@@ -75,6 +75,9 @@ WHERE name = 'Sale';
 SELECT * FROM Account
 WHERE LENGTH(full_name) = (SELECT MAX(LENGTH(full_name)) FROM Account);
 
+SELECT * FROM Account
+WHERE LENGTH(full_name) IN (SELECT MAX(LENGTH(full_name)) FROM Account);
+
 -- Question 5: Lấy ra thông tin account có full name dài nhất và thuộc phòng ban có id = 2
 SELECT * FROM Account
 WHERE LENGTH(full_name) = (SELECT MAX(LENGTH(full_name)) FROM Account) AND department_id = 2;

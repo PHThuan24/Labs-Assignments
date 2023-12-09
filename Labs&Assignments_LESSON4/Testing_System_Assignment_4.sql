@@ -36,10 +36,11 @@ GROUP BY A.department_id
 HAVING COUNT(P.id) > 3;
 
 -- Question 5: Viết lệnh để lấy ra danh sách câu hỏi được sử dụng trong đề thi nhiều nhất
--- SELECT question_id, COUNT(question_id) countQuestion FROM EXAMQUESTION
--- GROUP BY exam_id
--- ORDER BY countQuestion ASC
--- LIMIT 1;
+SELECT EQ.question_id, COUNT(EQ.exam_id)  FROM EXAMQUESTION EQ
+GROUP BY EQ.question_id
+ORDER BY COUNT(exam_id) ASC
+LIMIT 3;
+
 
 -- Question 6: Thông kê mỗi category Question được sử dụng trong bao nhiêu Question
 SELECT Q.category_id, C.category, COUNT(*)  FROM Question Q
