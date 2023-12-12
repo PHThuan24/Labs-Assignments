@@ -30,6 +30,19 @@ DELIMITER ;
 
 CALL getNumAccInGroup();
 
+DROP PROCEDURE IF EXISTS  getNumAccByGroup;
+DELIMITER $$
+CREATE PROCEDURE getNumAccByGroup(IN group_name_in NVARCHAR(64))
+BEGIN
+	SELECT GM.group_id, G.name, COUNT(account_id) `Number Of Member` FROM GroupMember GM
+	INNER JOIN `Group` G ON G.id = GM.group_id
+    WHERE G.name = group_name_in
+	GROUP BY group_id;
+END$$
+DELIMITER ;
+
+CALL getNumAccByGroup('Lap Trinh');
+
 -- Question 3: Tạo store để thống kê mỗi type question có bao nhiêu question được tạo
 -- trong tháng hiện tại
 DROP PROCEDURE IF EXISTS  numberQuestionInType;
@@ -50,15 +63,14 @@ DELIMITER $$
 CREATE PROCEDURE maxNumberQuestionInType()
 BEGIN
 	SELECT type_id, COUNT(*) numberQuestionInType FROM Question
-	WHERE id = (
+	GROUP BY type_id
+	HAVING numberQuestionInType = (
 		SELECT MAX(numberQuestion) 
 		FROM (SELECT COUNT(*) numberQuestion FROM Question GROUP BY type_id) MQ
-	)
-	GROUP BY type_id;
+	);
 END$$
 DELIMITER ;
 CALL maxNumberQuestionInType();
-
 
 -- Question 5: Sử dụng store ở question 4 để tìm ra tên của type question
 DROP PROCEDURE IF EXISTS  getTypeName;
@@ -67,11 +79,11 @@ CREATE PROCEDURE getTypeName()
 BEGIN
 	SELECT Q.type_id, T.type, COUNT(*) numberQuestionInType FROM Question Q
     INNER JOIN QuestionType T ON T.id = Q.type_id
-	WHERE Q.id = (
+	GROUP BY type_id
+	HAVING numberQuestionInType = (
 		SELECT MAX(numberQuestion) 
 		FROM (SELECT COUNT(*) numberQuestion FROM Question GROUP BY type_id) MQ
-	)
-	GROUP BY type_id;
+	);
 END$$
 DELIMITER ;
 CALL getTypeName();
@@ -127,7 +139,7 @@ CALL addNewAccount('Pham Thuan', 'phamhongthuan@gmail.com');
 -- ('Category 3'), ('Category 4');
 
 -- INSERT INTO Question(content, category_id, type_id, creator_id, created_date)
--- VALUES('Lorem Ipsum is simply dummy text of the printing and typesetting industry CDE1?', 1, 1, 3, CURDATE()),
+-- VALUES('Lorem Ipsum is simply dummy text of the printing and typesetting industry CDE1?', 1, 1, 3, '2023-11-20'),
 -- ('Lorem Ipsum is simply dummy text of the printing and typesetting industry 1?', 2, 1, 2, CURDATE()),
 -- ('Lorem Ipsum is simply dummy text of the printing and typesetting industry 15?', 1, 2, 12, CURDATE()),
 -- ('Lorem Ipsum is simply dummy text of the printing and typesetting industry 12E?', 4, 1, 6, CURDATE()),
@@ -188,5 +200,7 @@ CALL delExamCreate3Y();
 -- chuyển về phòng ban default là phòng ban chờ việc
 
 
--- Question 12: Viết store để in ra mỗi tháng có bao nhiêu câu hỏi được tạo trong năm
--- nay
+-- Question 12: Viết store để in ra mỗi tháng có bao nhiêu câu hỏi được tạo trong năm nay
+SELECT COUNT(*) FROM Question
+WHERE YEAR(created_date) = YEAR(CURDATE())
+GROUP BY MONTH(created_date)
