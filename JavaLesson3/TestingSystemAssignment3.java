@@ -22,22 +22,20 @@ public class TestingSystemAssignment3 {
 //		E4Question1();
 //		E4Question2();
 //		E4Question3();
+//		System.out.println(E4Question3("Pham  Hong Thuan   "));
 //		E4Question4();
 //		E4Question5();
 //		E4Question6();
+//		E4Question7A();
+//		E4Question7B();
 		
+//		System.out.println(IsReverse("OK123", "321KO"));
+////		IsReverse("OK", "KO");
 		
-
-		
-		
-		
-		
-		
-		
-		
-		
-
-		
+//		System.out.println(countA("Count special Character"));
+//		System.out.println(Reverse("Pham Hong Thuan"));
+//		System.out.println(ReplaceChar("VTI Academy", 'e', '*'));
+		System.out.println(ReverseString("Pham Hong Thuan"));
 	}
 	
 	
@@ -111,8 +109,6 @@ public class TestingSystemAssignment3 {
 		float result = (float) a/b;
 		return result;
 	}
-	
-	
 	
 	/*
 	 * Exercise 2 (Optional): Default value
@@ -227,7 +223,7 @@ public class TestingSystemAssignment3 {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Enter Your Name: ");
 		String yname = scanner.nextLine();
-		String[] arr = yname.split(" ");
+		String[] arr = yname.toLowerCase().split(" ");
 		String result = "";
 		for (int i = 0; i < arr.length; i++) {
 			char tempChar = Character.toUpperCase(arr[i].charAt(0));
@@ -239,6 +235,22 @@ public class TestingSystemAssignment3 {
 //		char capitalFirstletter = Character.toUpperCase(firstLetter);
 //		String result = yname.replace(yname.charAt(0), capitalFirstletter);
 //		System.out.println("Your name: "+result);
+	}
+	
+	
+	public static String E4Question3(String input) {
+		String result = "";
+		String[] arr = input.toLowerCase().split(" ");
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == "") {
+				continue;
+			}
+			char tempChar = Character.toUpperCase(arr[i].charAt(0));
+			String tempString = arr[i].replace(arr[i].charAt(0), tempChar);
+			result  = result  + tempString + " ";
+		}
+//		System.out.println(result);
+		return result.trim();
 	}
 	
 	/*
@@ -309,4 +321,128 @@ public class TestingSystemAssignment3 {
 		System.out.println("Tên đệm: " +midName);
 		System.out.println("Tên là: " +lastName);
 	}
+	
+	/*
+	 * Question 7:
+		Viết chương trình yêu cầu người dùng nhập vào họ và tên đầy đủ và
+		chuẩn hóa họ và tên của họ như sau:
+		a) Xóa dấu cách ở đầu và cuối và giữa của chuỗi người dùng nhập
+		vào
+		VD: Nếu người dùng nhập vào " nguyễn văn nam " thì sẽ
+		chuẩn hóa thành "nguyễn văn nam"
+		b) Viết hoa chữ cái mỗi từ của người dùng
+		VD: Nếu người dùng nhập vào " nguyễn văn nam " thì sẽ
+		chuẩn hóa thành "Nguyễn Văn Nam"
+	 * */
+	public static void E4Question7A() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter Full name: ");
+		String fullName = scanner.nextLine();
+		String newFullName = fullName.trim();
+		System.out.println("Before: \"" +fullName +"\"");
+		System.out.println(">After: \"" +newFullName +"\"");
+	}
+	
+	public static void E4Question7B() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter Full name: ");
+		String fullName = scanner.nextLine();
+		System.out.println("Before: \"" +fullName +"\"");
+		System.out.println(">After: \"" +E4Question3(fullName) +"\"");
+	}
+	
+	/*
+	 * Question 10 (Optional):
+		Kiểm tra 2 chuỗi có là đảo ngược của nhau hay không.
+		Nếu có xuất ra “OK” ngược lại “KO”.
+		Ví dụ “word” và “drow” là 2 chuỗi đảo ngược nhau.
+	 * */
+//	public static boolean IsReverse(String a, String b) {
+//		boolean result = true;
+//		char[] as = a.toCharArray();
+//		char[] bs = b.toCharArray();
+//		for (int i = 0; i < as.length; i++) {
+//			for (int j = bs.length-1; j >= 0; j--) {
+//				if (as[i] != bs[j]) {
+//					result = false;
+//					break;
+//				}
+//			System.out.println(as[i] + "  " +bs[j]);
+//			}
+//		}
+//		return result;
+//	}
+	
+	/*
+	 * Question 11 (Optional): Count special Character
+		Tìm số lần xuất hiện ký tự "a" trong chuỗi
+	 * */
+	public static int countA(String s) {
+		int count = 0;
+		char[] arr = s.toCharArray();
+//		char temp = 'a';
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == 'a') {
+				count+=1;
+			}
+		}
+		return count;
+	}
+	
+	/*
+	 * Question 12 (Optional): Reverse String
+		Đảo ngược chuỗi sử dụng vòng lặp
+	 * */
+	public static String Reverse(String a) {
+		String result = "";
+		char temp;
+		for (int i = 0; i < a.length(); i++) {
+			temp = a.charAt(i);
+			result = temp + result;
+		}
+		return result;
+	}
+	
+	/*
+	 * Question 14 (Optional): Replace character
+		Cho một chuỗi str, chuyển các ký tự được chỉ định sang một ký tự khác
+		cho trước.
+		Ví dụ:
+		"VTI Academy" chuyển ký tự 'e' sang '*' kết quả " VTI Acad*my"
+	 * */
+	public static String ReplaceChar(String a, char b, char c) {
+		String result = "";
+		char[] arr = a.toCharArray();
+		for (int i = 0; i < arr.length; i++) {
+			if(arr[i] == b) {
+				arr[i] = c;
+				result += arr[i];
+			} else {
+				result += arr[i];
+			}
+		}
+		return result;
+	}
+	
+	/*
+	 * Question 15 (Optional): Revert string by word
+		Đảo ngược các ký tự của chuỗi cách nhau bởi dấu cách mà không dùng
+		thư viện.
+		Ví dụ: " I am developer " => "developer am I".
+		Các ký tự bên trong chỉ cách nhau đúng một dấu khoảng cách.
+		Gợi ý: Các bạn cần loại bỏ dấu cách ở đầu và cuối câu, thao tác cắt
+		chuỗi theo dấu cách
+	 * */
+	public static String ReverseString(String a) {
+		String result = "";
+		String[] arr = a.trim().split(" ");
+		for (int i = arr.length-1; i >= 0; i--) {
+			result = result + " " +arr[i];
+		}
+		return result.trim();
+	}
+	
+	
+	
+	//
 }
